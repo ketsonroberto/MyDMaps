@@ -10,32 +10,12 @@ The main objective of the presented code is to show how the implementation of Di
 
 Theory of Diffusion Maps
 
-Nonlinear dimensionality reduction techniques consider that high-dimensional data can lie on a low-dimensional manifold. To reveal this embedded low-dimensional structure, one can resort to kernel-based techniques such as Diffusion Maps \cite{coifman2006}; where the spectral decomposition of the transition matrix of a random walk performed on the data is used to determine a new set of coordinates, also known as diffusion coordinates, embedding this manifold into a space of reduced dimension. For example, data observed in a 3-D space can be constrained to a 2-D structure that can be revealed by the diffusion coordinates. Next, the Diffusion Maps technique is described in details.
+Nonlinear dimensionality reduction techniques consider that high-dimensional data can lie on a low-dimensional manifold. To reveal this embedded low-dimensional structure, one can resort to kernel-based techniques such as Diffusion Maps [coifman 2006]; where the spectral decomposition of the transition matrix of a random walk performed on the data is used to determine a new set of coordinates, also known as diffusion coordinates, embedding this manifold into a space of reduced dimension. For example, data observed in a 3-D space can be constrained to a 2-D structure that can be revealed by the diffusion coordinates.
 
-Given a dataset $S_{\mathbf{X}} =  \left\{\mathbf{X}_i, \dots, \mathbf{X}_N \right\}$ with $\mathbf{X}_i \in \mathbb{R}^{n}$, and a positive semi-definite kernel $k: \mathbb{R}^{n} \times \mathbb{R}^{n} \rightarrow \mathbb{R}$ such as the Gaussian kernel presented in Eq. (\ref{eq:gaussian_kernel}), we can construct the kernel matrix $\mathbf{K} = [k_{ij}] = \left[k(\mathbf{X}_i,\mathbf{X}_j)\right] \in \mathbb{R}^{N \times N}$ encoding the pairwise similarity of data points in $S_{\mathbf{X}}$. In this regard, the kernel attains its maximum value when $\mathbf{X}_i=\mathbf{X}_j$.
-\begin{equation}\label{eq:gaussian_kernel}
-    k(\mathbf{X}_i,\mathbf{X}_j) = \mathrm{exp}\left( -\frac{||\mathbf{X}_i - \mathbf{X}_j||^2_2}{4 \epsilon}\right),
-\end{equation}
-where $\epsilon$ is the lenght-scale parameter controlling the level of correlation of a point with its neighbors. Next, to obtain the coordinates embedding the high-dimensional dataset $S_{\mathbf{X}}$ into a low-dimensional space, we first build the following diagonal matrix $\mathbf{D}=[D_{ii}] \in \mathbb{R}^{N \times N}$ as
 
-    D_{ii} = \sum_{j=1}^{N} k_{ij}.
+Class DiffusionMaps
 
-\noindent
-Next, a normalized version of the kernel matrix $k_{ij}$ is obtained as
-\begin{equation}\label{eq:5.23}
-    \kappa_{ij} = \frac{k_{ij}}{\sqrt{D_{ii}D_{jj}}},
-\end{equation}
-\noindent
-and the transition matrix $\mathbf{P}$ is obtained from the following normalization
-\begin{equation}\label{eq:5.24}
-    P_{ij} = \frac{\kappa_{ij}}{\sum_{k=1}^{N} \kappa_{ik}}.
-\end{equation}
-\noindent
-The eigendecomposition of $\mathbf{P} = [P_{ij}]$ yields a set of eigenvectors $\mathbf{\Phi} = [\phi_0, \dots, \phi_N]$ and their respective eigenvalues $\mathbf{\Lambda} = \mathrm{diag}(\lambda_0, \dots, \lambda_N)$. Thus, every element $\mathbf{X}_i$ of $S_{\mathbf{X}}$ has a representation on a low-dimensional space defined by the \textbf{diffusion coordinates} $\boldsymbol{\psi}_i = [\lambda_0 \Phi_{i0}, \dots, \lambda_r \Phi_{ir}]^T$, where $r \leq N$. For a more detailed description of the Diffusion Maps framework see \cite{coifman2006}.
-
-\section{Class \textit{DiffusionMaps}}
-\label{class_dmaps}
-The Diffusion Maps framework introduced in Section \ref{Introduction} is implemented as a python class in \texttt{TestDiffusionMaps.py}. Next, some elements of the class \texttt{DiffusionMaps} are discussed. First, the attributes of \texttt{DiffusionMaps} are the following:
+The Diffusion Maps framework is implemented as a python class in TestDiffusionMaps.py. Next, some elements of the ``DiffusionMaps`` are discussed. First, the attributes of \texttt{DiffusionMaps} are the following:
 \begin{itemize}
     \item Kernel matrix $\mathbf{K}$ (\texttt{kernel\underline{\hspace{.1in}}matrix})
     \item Transition matrix $\mathbf{P}$ (\texttt{transition\underline{\hspace{.1in}}matrix})
@@ -147,8 +127,5 @@ Ran 2 tests in 0.514s
 OK
 \end{lstlisting}
 
-\bibliographystyle{unsrt}
-\bibliography{references}
-
-\end{document}
+[coifman 2006]  R. R. Coifman and S. Lafon.  Diffusion maps.Applied and ComputationalHarmonic Analysis, 21(1):5 – 30, 2006.  Special Issue:  Diffusion Maps andWavelets.
 
