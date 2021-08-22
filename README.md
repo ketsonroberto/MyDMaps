@@ -8,18 +8,18 @@ Although the codes in TestDiffusionMaps.py are self-explanatory due to the inclu
 
 The main objective of the presented code is to show how the implementation of Diffusion Maps can be simple and powerful. Moreover, two simple examples of unit tests are implemented to verify the code reliability. The classes in \texttt{TestDiffusionMaps.py} were implemented in Python 3.9 using the oriented-object programming (OOP) paradigm, and the examples were run on a computer with macOS. Further, the code requires the following Python toolboxes numpy, scipy, and scikit-learn. 
 
-\subsection{Theory of Diffusion Maps}
-\label{dmaps}
-Nonlinear dimensionality reduction techniques consider that high-dimensional data can lie on a low-dimensional manifold. To reveal this embedded low-dimensional structure, one can resort to kernel-based techniques such as Diffusion Maps \cite{coifman2006}; where the spectral decomposition of the transition matrix of a random walk performed on the data is used to determine a new set of coordinates, also known as diffusion coordinates, embedding this manifold into a space of reduced dimension. For example, data observed in a 3-D space can be constrained to a 2-D structure that can be revealed by the diffusion coordinates. Next, the Diffusion Maps technique is described in details.\\
+Theory of Diffusion Maps
+
+Nonlinear dimensionality reduction techniques consider that high-dimensional data can lie on a low-dimensional manifold. To reveal this embedded low-dimensional structure, one can resort to kernel-based techniques such as Diffusion Maps \cite{coifman2006}; where the spectral decomposition of the transition matrix of a random walk performed on the data is used to determine a new set of coordinates, also known as diffusion coordinates, embedding this manifold into a space of reduced dimension. For example, data observed in a 3-D space can be constrained to a 2-D structure that can be revealed by the diffusion coordinates. Next, the Diffusion Maps technique is described in details.
 
 Given a dataset $S_{\mathbf{X}} =  \left\{\mathbf{X}_i, \dots, \mathbf{X}_N \right\}$ with $\mathbf{X}_i \in \mathbb{R}^{n}$, and a positive semi-definite kernel $k: \mathbb{R}^{n} \times \mathbb{R}^{n} \rightarrow \mathbb{R}$ such as the Gaussian kernel presented in Eq. (\ref{eq:gaussian_kernel}), we can construct the kernel matrix $\mathbf{K} = [k_{ij}] = \left[k(\mathbf{X}_i,\mathbf{X}_j)\right] \in \mathbb{R}^{N \times N}$ encoding the pairwise similarity of data points in $S_{\mathbf{X}}$. In this regard, the kernel attains its maximum value when $\mathbf{X}_i=\mathbf{X}_j$.
 \begin{equation}\label{eq:gaussian_kernel}
     k(\mathbf{X}_i,\mathbf{X}_j) = \mathrm{exp}\left( -\frac{||\mathbf{X}_i - \mathbf{X}_j||^2_2}{4 \epsilon}\right),
 \end{equation}
 where $\epsilon$ is the lenght-scale parameter controlling the level of correlation of a point with its neighbors. Next, to obtain the coordinates embedding the high-dimensional dataset $S_{\mathbf{X}}$ into a low-dimensional space, we first build the following diagonal matrix $\mathbf{D}=[D_{ii}] \in \mathbb{R}^{N \times N}$ as
-\begin{equation}\label{eq:5.21}
+
     D_{ii} = \sum_{j=1}^{N} k_{ij}.
-\end{equation}
+
 \noindent
 Next, a normalized version of the kernel matrix $k_{ij}$ is obtained as
 \begin{equation}\label{eq:5.23}
