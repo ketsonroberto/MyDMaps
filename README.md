@@ -100,6 +100,7 @@ One can observe that the an object of ``DiffusionMaps`` (`dfm`) is created witho
 6. Running MyTestCase
 
 To run the unit tests, one can use the following command in the directory containing ``TestDiffusionMaps.py``:
+
 \begin{lstlisting}[language=bash, caption=Running the unit test.]
 $ python -m unittest TestDiffusionMaps
 \end{lstlisting}
