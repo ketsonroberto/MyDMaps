@@ -1,2 +1,232 @@
 # MyDMaps
-This repository contains the Python files and Jupiter notebooks running several examples of Diffusion Maps
+This repository contains the Python files and Jupiter notebooks running several examples of Diffusion Maps.
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{soul}
+\usepackage{amsmath}
+\usepackage{lineno}
+\usepackage{graphics}
+\usepackage{caption}
+\usepackage{lscape}
+\usepackage{tabularx}
+\usepackage[makeroom]{cancel}
+\usepackage[english]{babel}
+\usepackage{float}
+\usepackage{amsfonts}
+\usepackage{textcomp}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{mathtools}
+\usepackage{lipsum}
+\usepackage{algorithm}
+\usepackage{todonotes}
+%\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+%\newdefinition{definition}{Definition}
+\usepackage{courier}
+% Packages and macros go here
+\usepackage{lipsum}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{algorithmic}
+\ifpdf
+  \DeclareGraphicsExtensions{.eps,.pdf,.png,.jpg}
+\else
+  \DeclareGraphicsExtensions{.eps}
+\fi
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{Documentation: Unit Test of Diffusion Maps with Python}
+\author{Ketson R. M. dos Santos \\ \href{email: ketson.santos@epfl.ch} }
+
+\begin{document}
+\date{}
+
+\maketitle
+
+\section{Introduction}
+\label{Introduction}
+
+\subsection{Objective and methods}
+Although the codes in \texttt{TestDiffusionMaps.py} are self-explanatory due to the included comments, this supplementary document contains a more detailed description of the unsupervised learning technique (Diffusion Maps) implemented in \texttt{TestDiffusionMaps.py}.\\
+
+The main objective of the presented code is to show how the implementation of Diffusion Maps can be simple and powerful. Moreover, two simple examples of unit tests are implemented to verify the code reliability. The classes in \texttt{TestDiffusionMaps.py} were implemented in Python 3.9 using the oriented-object programming (OOP) paradigm, and the examples were run on a computer with macOS. Further, the code requires the following Python toolboxes numpy, scipy, and scikit-learn. 
+
+\subsection{Theory of Diffusion Maps}
+\label{dmaps}
+Nonlinear dimensionality reduction techniques consider that high-dimensional data can lie on a low-dimensional manifold. To reveal this embedded low-dimensional structure, one can resort to kernel-based techniques such as Diffusion Maps \cite{coifman2006}; where the spectral decomposition of the transition matrix of a random walk performed on the data is used to determine a new set of coordinates, also known as diffusion coordinates, embedding this manifold into a space of reduced dimension. For example, data observed in a 3-D space can be constrained to a 2-D structure that can be revealed by the diffusion coordinates. Next, the Diffusion Maps technique is described in details.\\
+
+Given a dataset $S_{\mathbf{X}} =  \left\{\mathbf{X}_i, \dots, \mathbf{X}_N \right\}$ with $\mathbf{X}_i \in \mathbb{R}^{n}$, and a positive semi-definite kernel $k: \mathbb{R}^{n} \times \mathbb{R}^{n} \rightarrow \mathbb{R}$ such as the Gaussian kernel presented in Eq. (\ref{eq:gaussian_kernel}), we can construct the kernel matrix $\mathbf{K} = [k_{ij}] = \left[k(\mathbf{X}_i,\mathbf{X}_j)\right] \in \mathbb{R}^{N \times N}$ encoding the pairwise similarity of data points in $S_{\mathbf{X}}$. In this regard, the kernel attains its maximum value when $\mathbf{X}_i=\mathbf{X}_j$.
+\begin{equation}\label{eq:gaussian_kernel}
+    k(\mathbf{X}_i,\mathbf{X}_j) = \mathrm{exp}\left( -\frac{||\mathbf{X}_i - \mathbf{X}_j||^2_2}{4 \epsilon}\right),
+\end{equation}
+where $\epsilon$ is the lenght-scale parameter controlling the level of correlation of a point with its neighbors. Next, to obtain the coordinates embedding the high-dimensional dataset $S_{\mathbf{X}}$ into a low-dimensional space, we first build the following diagonal matrix $\mathbf{D}=[D_{ii}] \in \mathbb{R}^{N \times N}$ as
+\begin{equation}\label{eq:5.21}
+    D_{ii} = \sum_{j=1}^{N} k_{ij}.
+\end{equation}
+\noindent
+Next, a normalized version of the kernel matrix $k_{ij}$ is obtained as
+\begin{equation}\label{eq:5.23}
+    \kappa_{ij} = \frac{k_{ij}}{\sqrt{D_{ii}D_{jj}}},
+\end{equation}
+\noindent
+and the transition matrix $\mathbf{P}$ is obtained from the following normalization
+\begin{equation}\label{eq:5.24}
+    P_{ij} = \frac{\kappa_{ij}}{\sum_{k=1}^{N} \kappa_{ik}}.
+\end{equation}
+\noindent
+The eigendecomposition of $\mathbf{P} = [P_{ij}]$ yields a set of eigenvectors $\mathbf{\Phi} = [\phi_0, \dots, \phi_N]$ and their respective eigenvalues $\mathbf{\Lambda} = \mathrm{diag}(\lambda_0, \dots, \lambda_N)$. Thus, every element $\mathbf{X}_i$ of $S_{\mathbf{X}}$ has a representation on a low-dimensional space defined by the \textbf{diffusion coordinates} $\boldsymbol{\psi}_i = [\lambda_0 \Phi_{i0}, \dots, \lambda_r \Phi_{ir}]^T$, where $r \leq N$. For a more detailed description of the Diffusion Maps framework see \cite{coifman2006}.
+
+\section{Class \textit{DiffusionMaps}}
+\label{class_dmaps}
+The Diffusion Maps framework introduced in Section \ref{Introduction} is implemented as a python class in \texttt{TestDiffusionMaps.py}. Next, some elements of the class \texttt{DiffusionMaps} are discussed. First, the attributes of \texttt{DiffusionMaps} are the following:
+\begin{itemize}
+    \item Kernel matrix $\mathbf{K}$ (\texttt{kernel\underline{\hspace{.1in}}matrix})
+    \item Transition matrix $\mathbf{P}$ (\texttt{transition\underline{\hspace{.1in}}matrix})
+    \item Input data $S_{\mathbf{X}}$ (\texttt{X}) 
+    \item Diffusion coordinates $\boldsymbol{\psi}_i$ (\texttt{diffusion\underline{\hspace{.1in}}coordinates})
+\end{itemize}
+\noindent
+as presented in the following piece of code.
+
+\begin{lstlisting}[language=Python, caption=class DiffusionMaps.]
+class DiffusionMaps:
+    """
+    Diffusion maps is a nonlinear dimensionality reduction technique for embedding high-dimensional data into a
+    low-dimensional Euclidean space revealing their intrinsic geometric structure.
+    """
+
+    def __init__(self):
+        # Attributes of ``DiffusionMaps``.
+        self.kernel_matrix = None  # Kernel matrix.
+        self.transition_matrix = None  # Kernel matrix.
+        self.X = None  # Input data.
+        self.diffusion_coordinates = None  # Diffusion Coordinates.
+\end{lstlisting}\label{ls:dmaps1}
+
+This class attributes are instantiated by using the method \texttt{fit}; where \texttt{X} is the input data equivalent to $S_{\mathbf{X}}$, and \texttt{epsilon} is the length-scale parameter $\epsilon$ in Eq. \ref{eq:gaussian_kernel}.
+\begin{lstlisting}[language=Python, caption=Instantiating the attributes of DiffusionMaps]
+    def fit(self, X=None, epsilon=None):
+\end{lstlisting}\label{ls:dmaps2}
+\noindent
+Once the class \texttt{DiffusionMaps} is instantiated, the attributes and methods are accessible from the object using OOP paradigm with Python.
+
+\section{Class MyTestCase}
+\label{class_my_test}
+The file \texttt{TestDiffusionMaps.py} also contain the class \texttt{MyTestCase} for performing the unit tests in two distinct cases. The first test (Listing \ref{ls:test1}) is used to compare the number of points in \texttt{diffusion\underline{\hspace{.1in}}coordinates} and the number of points in the the input dataset \texttt{X}. Therefore, the diffusion coordinates must be consistent with the input dataset.
+
+\begin{lstlisting}[language=Python, caption=Unit test 1.]
+# Test 1: test the if the number of diffusion coordinates is equal to the number of data points in `X`.
+def test_length_coordinates(self):
+    X, _ = make_swiss_roll(n_samples=1000)  # Sample `n_samples` points from the Swiss Roll manifold.
+    dfm = DiffusionMaps()  # Object of `DiffusionMaps`.
+    dfm.fit(X=X, epsilon=1.0)  # Instantiate the attributes of `DiffusionMaps` with `epsilon` = 1.
+
+    # Test if the number of data points in `X` is equal to the length of diffusion_coordinates.
+    self.assertEqual(np.shape(X)[0], np.shape(dfm.diffusion_coordinates)[0])
+\end{lstlisting}\label{ls:test1}
+
+The second unit test (Listing 4) check the raise of exceptions in the code. In particular, it verifies if \texttt{raise ValueError} is called when the shape of \texttt{X} is not acceptable. In this implementation of Diffusion Maps \texttt{X} must be an array with two dimensions (row and columns), otherwise the code shows the following error message: \texttt{Not acceptable shape for `X`}. Therefore, the code will pass this test only if it raises an exception for this particular condition.
+\begin{lstlisting}[language=Python, caption=Unit test 2.]
+# Test 2: test if the code correctly raise an exception for the shape of the input data `X`.
+    def test_input_shape_exception(self):
+        # Get a random array with shape (100, 3, 1). DiffusionMaps only accepts len(np.shape(`X`)) = 2.
+        X = np.random.rand(100, 3, 1)
+        dfm = DiffusionMaps()  # Object of `DiffusionMaps`.
+
+        # Get the exception for raise ValueError.
+        with self.assertRaises(ValueError) as exception_context:
+            dfm.fit(X=X, epsilon=1.0)  # Instantiate the attributes of `DiffusionMaps` with `epsilon` = 1.
+
+        # The code will pass the test when it will raise the following exception.
+        self.assertEqual(str(exception_context.exception), 'Not acceptable shape for `X`.')
+\end{lstlisting}\label{ls:test2}
+
+\section{Running DiffusionMaps}
+\label{run_dmaps}
+This section shows how to run one example using \texttt{DiffusionMaps}. The problem consist of unwrapping the Swiss Roll manifold, which is defined in a 3-D space, and it is implicitly included in the unit test presented in Listing \ref{ls:test1}. Herein, the Swiss Roll manifold is sampled, and a point cloud of points in the 3-D space represent this surface, as observed in Fig. \ref{fig:swiss_roll} when 2,000 samples are generated using the following scikit-learn command:
+\begin{lstlisting}[language=Python, caption=Sampling the Swiss Roll manifold.]
+from sklearn.datasets import make_swiss_roll
+X, color = make_swiss_roll(n_samples=2000, random_state=1)
+\end{lstlisting}
+
+One can easily see that the Swiss Roll manifold is defined in 3-D, but it has an intrinsic 2-D structure. Thus, one can use Diffusion Maps to unwrap this 3-D structure. Using the code presented herein, one can obtain the representation of the Swiss Roll manifold in a 2-D space. To this aim, one can use the following commands to instantiate the \texttt{DiffusionMaps} class. 
+\begin{lstlisting}[language=Python, caption=Instantiating the class DiffusionMaps.]
+dfm = DiffusionMaps()
+dfm.fit(X=X, epsilon=1.0)
+\end{lstlisting}
+One can observe that the an object of \texttt{DiffusionMaps} (\texttt{dfm}) is created without input arguments. To instantiate the attributes one can use the method \texttt{fit}, which receives the input dataset \texttt{X} and the value of \texttt{epsilon} equal to 1.0 (which is selected by the user).
+\begin{figure}[!ht]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.35]{images/swiss_roll.pdf}  
+% 	\vspace{-1.5em}
+	\caption{Example 1: Grassmannian diffusion manifold: a) training set for GH, and b) predicted Grassmannian diffusion manifold for 3,000 additional samples.}
+% 	\vspace{-0.5em}
+	\label{fig:swiss_roll}
+\end{figure}
+
+One of the attributes of \texttt{DiffusionMaps} is \texttt{diffusion\underline{\hspace{.1in}}coordinates} (presented as $\boldsymbol{\psi}_i$ in Section \ref{dmaps}), which stores the diffusion coordinates used to embed the Swiss Roll manifold into a 2-D space. This embedding is presented in Fig. \ref{fig:dmaps}, where the diffusion coordinates $\psi_2$ (\texttt{diffusion\underline{\hspace{.1in}}coordinates}[:, 2]), $\psi_3$ (\texttt{diffusion\underline{\hspace{.1in}}coordinates}[:, 3]), $\psi_4$ (\texttt{diffusion\underline{\hspace{.1in}}coordinates}[:, 4]), and $\psi_5$ (\texttt{diffusion\underline{\hspace{.1in}}coordinates}[:, 5]) are plotted with respect to $\psi_1$ (\texttt{diffusion\underline{\hspace{.1in}}coordinates}[:, 1]). \textbf{It is important mentioning that the 0th diffusion coordinates ($\psi_0$) are not used in this kind of embedding because they represent the trivial eigendirection. Therefore, when plotting the diffusion coordinates there is no need to show \texttt{diffusion\underline{\hspace{.1in}}coordinates}[:, 0]}. Based on Fig. \ref{fig:dmaps} one can observe that $\psi_1$ and $\psi_5$ are the directions that unwrap the Swiss Roll manifold.
+\begin{figure}[!ht]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.45]{images/diffmaps.pdf}  
+% 	\vspace{-1.5em}
+	\caption{Example 1: Grassmannian diffusion manifold: a) training set for GH, and b) predicted Grassmannian diffusion manifold for 3,000 additional samples.}
+% 	\vspace{-0.5em}
+	\label{fig:dmaps}
+\end{figure}
+
+\section{Running MyTestCase}
+To run the unit tests, one can use the following command in the directory containing \texttt{TestDiffusionMaps.py}:
+\begin{lstlisting}[language=bash, caption=Running the unit test.]
+$ python -m unittest TestDiffusionMaps
+\end{lstlisting}
+Therefore, one can expect the following outcome:
+\begin{lstlisting}[language=bash, caption=Outcome of the unit test.]
+..
+--------------------------------------------------------------------
+Ran 2 tests in 0.514s
+
+OK
+\end{lstlisting}
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}
+
