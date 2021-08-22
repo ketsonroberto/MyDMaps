@@ -17,10 +17,10 @@ Nonlinear dimensionality reduction techniques consider that high-dimensional dat
 
 The Diffusion Maps framework is implemented as a python class in ``TestDiffusionMaps.py``. Next, some elements of ``DiffusionMaps`` are discussed. First, the attributes of ``DiffusionMaps`` are the following:
 
-* Kernel matrix $\mathbf{K}$ (\texttt{kernel\underline{\hspace{.1in}}matrix})
-* Transition matrix $\mathbf{P}$ (\texttt{transition\underline{\hspace{.1in}}matrix})
-* Input data $S_{\mathbf{X}}$ (\texttt{X}) 
-* Diffusion coordinates $\boldsymbol{\psi}_i$ (\texttt{diffusion\underline{\hspace{.1in}}coordinates})
+* Kernel matrix (`kernel_matrix`)
+* Transition matrix (`transition_matrix`)
+* Input data (`X`) 
+* Diffusion coordinates (`diffusion_coordinates`)
 
 as presented in the following piece of code.
 
