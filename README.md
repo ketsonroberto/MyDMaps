@@ -49,7 +49,7 @@ Once the class ``DiffusionMaps`` is instantiated, the attributes and methods are
 
 4. Class MyTestCase
 
-The file ``TestDiffusionMaps.py`` also contain the class ``MyTestCase`` for performing the unit tests in two distinct cases. The first test (Listing \ref{ls:test1}) is used to compare the number of points in \texttt{diffusion\underline{\hspace{.1in}}coordinates} and the number of points in the the input dataset \texttt{X}. Therefore, the diffusion coordinates must be consistent with the input dataset.
+The file ``TestDiffusionMaps.py`` also contain the class ``MyTestCase`` for performing the unit tests in two distinct cases. The first test (presented next) is used to compare the number of points in `diffusion_coordinates` and the number of points in the the input dataset `X`. Therefore, the diffusion coordinates must be consistent with the input dataset.
 
 \begin{lstlisting}[language=Python, caption=Unit test 1.]
 # Test 1: test the if the number of diffusion coordinates is equal to the number of data points in `X`.
@@ -62,7 +62,8 @@ def test_length_coordinates(self):
     self.assertEqual(np.shape(X)[0], np.shape(dfm.diffusion_coordinates)[0])
 \end{lstlisting}\label{ls:test1}
 
-The second unit test (Listing 4) check the raise of exceptions in the code. In particular, it verifies if \texttt{raise ValueError} is called when the shape of \texttt{X} is not acceptable. In this implementation of Diffusion Maps \texttt{X} must be an array with two dimensions (row and columns), otherwise the code shows the following error message: \texttt{Not acceptable shape for `X`}. Therefore, the code will pass this test only if it raises an exception for this particular condition.
+The second unit test (presented next) check the raise of exceptions in the code. In particular, it verifies if `raise ValueError` is called when the shape of `X` is not acceptable. In this implementation of Diffusion Maps `X` must be an array with two dimensions (row and columns), otherwise the code shows the following error message: ``Not acceptable shape for `X` ``. Therefore, the code will pass this test only if it raises an exception for this particular condition.
+
 \begin{lstlisting}[language=Python, caption=Unit test 2.]
 # Test 2: test if the code correctly raise an exception for the shape of the input data `X`.
     def test_input_shape_exception(self):
@@ -78,43 +79,27 @@ The second unit test (Listing 4) check the raise of exceptions in the code. In p
         self.assertEqual(str(exception_context.exception), 'Not acceptable shape for `X`.')
 \end{lstlisting}\label{ls:test2}
 
-\section{Running DiffusionMaps}
-\label{run_dmaps}
-This section shows how to run one example using \texttt{DiffusionMaps}. The problem consist of unwrapping the Swiss Roll manifold, which is defined in a 3-D space, and it is implicitly included in the unit test presented in Listing \ref{ls:test1}. Herein, the Swiss Roll manifold is sampled, and a point cloud of points in the 3-D space represent this surface, as observed in Fig. \ref{fig:swiss_roll} when 2,000 samples are generated using the following scikit-learn command:
+5. Running DiffusionMaps
+
+This section shows how to run one example using ``DiffusionMaps``. The problem consist of unwrapping the Swiss Roll manifold, which is defined in a 3-D space, and it is implicitly included in the first unit test in ``TestDiffusionMaps.py``. Herein, the Swiss Roll manifold is sampled, and a 2,000 point cloud of points in the 3-D space represent this surface. Thus, one can use the following scikit-learn command to get samples from the Swiss Roll manifold:
+
 \begin{lstlisting}[language=Python, caption=Sampling the Swiss Roll manifold.]
 from sklearn.datasets import make_swiss_roll
 X, color = make_swiss_roll(n_samples=2000, random_state=1)
 \end{lstlisting}
 
-One can easily see that the Swiss Roll manifold is defined in 3-D, but it has an intrinsic 2-D structure. Thus, one can use Diffusion Maps to unwrap this 3-D structure. Using the code presented herein, one can obtain the representation of the Swiss Roll manifold in a 2-D space. To this aim, one can use the following commands to instantiate the \texttt{DiffusionMaps} class. 
+One can easily see that the Swiss Roll manifold is defined in 3-D, but it has an intrinsic 2-D structure. Thus, one can use Diffusion Maps to unwrap this 3-D structure. Using the code presented herein, one can obtain the representation of the Swiss Roll manifold in a 2-D space. To this aim, one can use the following commands to instantiate ``DiffusionMaps``. 
+
 \begin{lstlisting}[language=Python, caption=Instantiating the class DiffusionMaps.]
 dfm = DiffusionMaps()
 dfm.fit(X=X, epsilon=1.0)
 \end{lstlisting}
-One can observe that the an object of \texttt{DiffusionMaps} (\texttt{dfm}) is created without input arguments. To instantiate the attributes one can use the method \texttt{fit}, which receives the input dataset \texttt{X} and the value of \texttt{epsilon} equal to 1.0 (which is selected by the user).
-\begin{figure}[!ht]
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=0.35]{images/swiss_roll.pdf}  
-% 	\vspace{-1.5em}
-	\caption{Example 1: Grassmannian diffusion manifold: a) training set for GH, and b) predicted Grassmannian diffusion manifold for 3,000 additional samples.}
-% 	\vspace{-0.5em}
-	\label{fig:swiss_roll}
-\end{figure}
 
-One of the attributes of \texttt{DiffusionMaps} is \texttt{diffusion\underline{\hspace{.1in}}coordinates} (presented as $\boldsymbol{\psi}_i$ in Section \ref{dmaps}), which stores the diffusion coordinates used to embed the Swiss Roll manifold into a 2-D space. This embedding is presented in Fig. \ref{fig:dmaps}, where the diffusion coordinates $\psi_2$ (\texttt{diffusion\underline{\hspace{.1in}}coordinates}[:, 2]), $\psi_3$ (\texttt{diffusion\underline{\hspace{.1in}}coordinates}[:, 3]), $\psi_4$ (\texttt{diffusion\underline{\hspace{.1in}}coordinates}[:, 4]), and $\psi_5$ (\texttt{diffusion\underline{\hspace{.1in}}coordinates}[:, 5]) are plotted with respect to $\psi_1$ (\texttt{diffusion\underline{\hspace{.1in}}coordinates}[:, 1]). \textbf{It is important mentioning that the 0th diffusion coordinates ($\psi_0$) are not used in this kind of embedding because they represent the trivial eigendirection. Therefore, when plotting the diffusion coordinates there is no need to show \texttt{diffusion\underline{\hspace{.1in}}coordinates}[:, 0]}. Based on Fig. \ref{fig:dmaps} one can observe that $\psi_1$ and $\psi_5$ are the directions that unwrap the Swiss Roll manifold.
-\begin{figure}[!ht]
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=0.45]{images/diffmaps.pdf}  
-% 	\vspace{-1.5em}
-	\caption{Example 1: Grassmannian diffusion manifold: a) training set for GH, and b) predicted Grassmannian diffusion manifold for 3,000 additional samples.}
-% 	\vspace{-0.5em}
-	\label{fig:dmaps}
-\end{figure}
+One can observe that the an object of ``DiffusionMaps`` (`dfm`) is created without input arguments. To instantiate the attributes one can use the method ``fit``, which receives the input dataset `X` and the value of `epsilon` equal to 1.0 (which is selected by the user).
 
-\section{Running MyTestCase}
-To run the unit tests, one can use the following command in the directory containing \texttt{TestDiffusionMaps.py}:
+6. Running MyTestCase
+
+To run the unit tests, one can use the following command in the directory containing ``TestDiffusionMaps.py``:
 \begin{lstlisting}[language=bash, caption=Running the unit test.]
 $ python -m unittest TestDiffusionMaps
 \end{lstlisting}
