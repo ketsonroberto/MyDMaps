@@ -1,11 +1,10 @@
 # MyDMaps
 This repository contains the Python files and Jupiter notebooks running several examples of Diffusion Maps.
 
-\section{Introduction}
-\label{Introduction}
+Introduction
 
-\subsection{Objective and methods}
-Although the codes in \texttt{TestDiffusionMaps.py} are self-explanatory due to the included comments, this supplementary document contains a more detailed description of the unsupervised learning technique (Diffusion Maps) implemented in \texttt{TestDiffusionMaps.py}.\\
+Objective and methods
+Although the codes in TestDiffusionMaps.py are self-explanatory due to the included comments, this supplementary document contains a more detailed description of the unsupervised learning technique (Diffusion Maps) implemented in TestDiffusionMaps.py.
 
 The main objective of the presented code is to show how the implementation of Diffusion Maps can be simple and powerful. Moreover, two simple examples of unit tests are implemented to verify the code reliability. The classes in \texttt{TestDiffusionMaps.py} were implemented in Python 3.9 using the oriented-object programming (OOP) paradigm, and the examples were run on a computer with macOS. Further, the code requires the following Python toolboxes numpy, scipy, and scikit-learn. 
 
