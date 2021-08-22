@@ -96,6 +96,7 @@ To run the unit tests, one can use the following command in the directory contai
     $ python -m unittest TestDiffusionMaps
 
 Therefore, one can expect the following outcome:
+
     ..
     --------------------------------------------------------------------
     Ran 2 tests in 0.514s
