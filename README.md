@@ -39,16 +39,17 @@ class DiffusionMaps:
         self.diffusion_coordinates = None  # Diffusion Coordinates.
 \end{lstlisting}\label{ls:dmaps1}
 
-This class attributes are instantiated by using the method \texttt{fit}; where \texttt{X} is the input data equivalent to $S_{\mathbf{X}}$, and \texttt{epsilon} is the length-scale parameter $\epsilon$ in Eq. \ref{eq:gaussian_kernel}.
+This class attributes are instantiated by using the method ``fit``; where `X` is the input data, and `epsilon` is the length-scale parameter of the Gaussiann Kernel.
+
 \begin{lstlisting}[language=Python, caption=Instantiating the attributes of DiffusionMaps]
     def fit(self, X=None, epsilon=None):
 \end{lstlisting}\label{ls:dmaps2}
-\noindent
-Once the class \texttt{DiffusionMaps} is instantiated, the attributes and methods are accessible from the object using OOP paradigm with Python.
 
-\section{Class MyTestCase}
-\label{class_my_test}
-The file \texttt{TestDiffusionMaps.py} also contain the class \texttt{MyTestCase} for performing the unit tests in two distinct cases. The first test (Listing \ref{ls:test1}) is used to compare the number of points in \texttt{diffusion\underline{\hspace{.1in}}coordinates} and the number of points in the the input dataset \texttt{X}. Therefore, the diffusion coordinates must be consistent with the input dataset.
+Once the class ``DiffusionMaps`` is instantiated, the attributes and methods are accessible from the object using OOP paradigm with Python.
+
+4. Class MyTestCase
+
+The file ``TestDiffusionMaps.py`` also contain the class ``MyTestCase`` for performing the unit tests in two distinct cases. The first test (Listing \ref{ls:test1}) is used to compare the number of points in \texttt{diffusion\underline{\hspace{.1in}}coordinates} and the number of points in the the input dataset \texttt{X}. Therefore, the diffusion coordinates must be consistent with the input dataset.
 
 \begin{lstlisting}[language=Python, caption=Unit test 1.]
 # Test 1: test the if the number of diffusion coordinates is equal to the number of data points in `X`.
