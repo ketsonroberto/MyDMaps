@@ -24,7 +24,6 @@ The Diffusion Maps framework is implemented as a python class in ``TestDiffusion
 
 as presented in the following piece of code.
 
-\begin{lstlisting}[language=Python, caption=class DiffusionMaps.]
 class DiffusionMaps:
     """
     Diffusion maps is a nonlinear dimensionality reduction technique for embedding high-dimensional data into a
@@ -37,13 +36,11 @@ class DiffusionMaps:
         self.transition_matrix = None  # Kernel matrix.
         self.X = None  # Input data.
         self.diffusion_coordinates = None  # Diffusion Coordinates.
-\end{lstlisting}\label{ls:dmaps1}
+
 
 This class attributes are instantiated by using the method ``fit``; where `X` is the input data, and `epsilon` is the length-scale parameter of the Gaussiann Kernel.
 
-\begin{lstlisting}[language=Python, caption=Instantiating the attributes of DiffusionMaps]
     def fit(self, X=None, epsilon=None):
-\end{lstlisting}\label{ls:dmaps2}
 
 Once the class ``DiffusionMaps`` is instantiated, the attributes and methods are accessible from the object using OOP paradigm with Python.
 
@@ -51,9 +48,9 @@ Once the class ``DiffusionMaps`` is instantiated, the attributes and methods are
 
 The file ``TestDiffusionMaps.py`` also contain the class ``MyTestCase`` for performing the unit tests in two distinct cases. The first test (presented next) is used to compare the number of points in `diffusion_coordinates` and the number of points in the the input dataset `X`. Therefore, the diffusion coordinates must be consistent with the input dataset.
 
-\begin{lstlisting}[language=Python, caption=Unit test 1.]
-# Test 1: test the if the number of diffusion coordinates is equal to the number of data points in `X`.
 def test_length_coordinates(self):
+    # Test 1: test the if the number of diffusion coordinates is equal to the number of data points in `X`.
+    
     X, _ = make_swiss_roll(n_samples=1000)  # Sample `n_samples` points from the Swiss Roll manifold.
     dfm = DiffusionMaps()  # Object of `DiffusionMaps`.
     dfm.fit(X=X, epsilon=1.0)  # Instantiate the attributes of `DiffusionMaps` with `epsilon` = 1.
