@@ -6,14 +6,14 @@ Introduction
 Objective and methods
 Although the codes in TestDiffusionMaps.py are self-explanatory due to the included comments, this supplementary document contains a more detailed description of the unsupervised learning technique (Diffusion Maps) implemented in TestDiffusionMaps.py.
 
-The main objective of the presented code is to show how the implementation of Diffusion Maps can be simple and powerful. Moreover, two simple examples of unit tests are implemented to verify the code reliability. The classes in \texttt{TestDiffusionMaps.py} were implemented in Python 3.9 using the oriented-object programming (OOP) paradigm, and the examples were run on a computer with macOS. Further, the code requires the following Python toolboxes numpy, scipy, and scikit-learn. 
+The main objective of the presented code is to show how the implementation of Diffusion Maps can be simple and powerful. Moreover, two simple examples of unit tests are implemented to verify the code reliability. The classes in ``TestDiffusionMaps.py`` were implemented in Python 3.9 using the oriented-object programming (OOP) paradigm, and the examples were run on a computer with macOS. Further, the code requires the following Python toolboxes numpy, scipy, and scikit-learn. 
 
 Theory of Diffusion Maps
 
 Nonlinear dimensionality reduction techniques consider that high-dimensional data can lie on a low-dimensional manifold. To reveal this embedded low-dimensional structure, one can resort to kernel-based techniques such as Diffusion Maps [coifman 2006]; where the spectral decomposition of the transition matrix of a random walk performed on the data is used to determine a new set of coordinates, also known as diffusion coordinates, embedding this manifold into a space of reduced dimension. For example, data observed in a 3-D space can be constrained to a 2-D structure that can be revealed by the diffusion coordinates.
 
 
-Class DiffusionMaps
+* Class DiffusionMaps
 
 The Diffusion Maps framework is implemented as a python class in TestDiffusionMaps.py. Next, some elements of the ``DiffusionMaps`` are discussed. First, the attributes of \texttt{DiffusionMaps} are the following:
 \begin{itemize}
