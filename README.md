@@ -1,7 +1,7 @@
 # MyDMaps
 This repository contains the Python files and Jupiter notebooks running several examples of Diffusion Maps.
 
-Introduction
+1. Introduction
 
 Objective and methods
 Although the codes in TestDiffusionMaps.py are self-explanatory due to the included comments, this supplementary document contains a more detailed description of the unsupervised learning technique (Diffusion Maps) implemented in TestDiffusionMaps.py.
